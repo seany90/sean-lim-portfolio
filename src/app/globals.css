@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primaryBg: #050505;
+  --color-secondaryBg: #111111;
+  --color-textMain: #F8F8F8;
+  --color-textSecondary: #BFBFBF;
+  --color-accent: #71E7FF;
+  --color-secondaryAccent: #7B61FF;
+  --color-success: #65F3A4;
+
+  --font-heading: Talea, Canela, Neue Montreal, sans-serif;
+  --font-body: Inter, sans-serif;
+  --font-display: Funnel Display, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-primaryBg);
+    color: var(--color-textMain);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(113, 231, 255, 0.5);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-hover .custom-cursor {
+  width: 64px;
+  height: 64px;
+  background-color: rgba(113, 231, 255, 0.1);
+  border-color: transparent;
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(113, 231, 255, 0.05);
+}
+
+/* Hide scrollbar for clean aesthetic */
+::-webkit-scrollbar {
+  display: none;
+}
+html {
+  scrollbar-width: none;
+}
