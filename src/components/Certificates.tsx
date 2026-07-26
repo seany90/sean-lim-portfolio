@@ -56,9 +56,9 @@ export default function Certificates() {
       >
         <div 
           style={{ transform: "translateZ(50px)" }}
-          className="relative md:absolute md:inset-0 p-8 md:p-12 flex flex-col items-center justify-center text-center border border-white/5 rounded-xl bg-gradient-to-br from-white/5 to-transparent h-full w-full"
+          className="relative md:absolute md:inset-0 p-8 md:p-12 flex flex-col items-center justify-center text-center border border-white/5 rounded-xl bg-gradient-to-br from-white/5 to-transparent w-full h-auto md:h-full"
         >
-          <div className="w-16 h-16 md:w-16 md:h-16 rounded-full bg-accent/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(113,231,255,0.4)] group-hover:scale-110 transition-transform duration-500">
+          <div className="w-16 h-16 md:w-16 md:h-16 rounded-full bg-accent/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(113,231,255,0.4)] md:group-hover:scale-110 transition-transform duration-500">
             <span className="font-display text-accent text-2xl font-bold">G</span>
           </div>
           <h3 className="font-heading text-2xl md:text-3xl mb-2 text-textMain tracking-wide">Google AI Professional</h3>
