@@ -5,8 +5,15 @@ import gsap from 'gsap';
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Check if device supports touch
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      setIsTouchDevice(true);
+      return;
+    }
+
     const cursor = cursorRef.current;
     const dot = dotRef.current;
     if (!cursor || !dot) return;
@@ -67,6 +74,8 @@ export default function CustomCursor() {
       gsap.ticker.remove(ticker);
     };
   }, []);
+
+  if (isTouchDevice) return null;
 
   return (
     <>
