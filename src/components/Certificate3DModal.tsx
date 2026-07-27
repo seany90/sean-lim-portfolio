@@ -147,11 +147,7 @@ export default function Certificate3DModal({ isOpen, onClose }: Certificate3DMod
           <pointLight position={[10, 10, 10]} intensity={1} color="#71E7FF" />
           
           <AnimatePresence>
-            <motion.group
-              initial={{ scale: 0, y: -5, rotateX: 1 }}
-              animate={{ scale: 1, y: 0, rotateX: 0 }}
-              transition={{ type: "spring", damping: 15, stiffness: 100 }}
-            >
+            <group>
               <Monolith 
                 isClosing={isClosing} 
                 onAnimationComplete={() => {
@@ -159,7 +155,7 @@ export default function Certificate3DModal({ isOpen, onClose }: Certificate3DMod
                   onClose();
                 }} 
               />
-            </motion.group>
+            </group>
           </AnimatePresence>
         </Canvas>
       </div>
