@@ -39,7 +39,7 @@ const certificates: CertData[] = [
     icon: "O",
     bullets: ["• Skill Mastery", "• Goal Achievement", "• Practical Application", "• Exceptional Performance", "• Industry Standards"],
     date: "Completed 2026",
-    pdfUrl: "/OESON Learning Certification .pdf#page=2"
+    pdfUrl: "/training-output.pdf"
   },
   {
     id: "oeson-recommendation",
@@ -48,7 +48,7 @@ const certificates: CertData[] = [
     icon: "O",
     bullets: ["• Strong Work Ethic", "• Problem Solving", "• Adaptability", "• Leadership Potential", "• Team Player"],
     date: "Completed 2026",
-    pdfUrl: "/OESON Learning Certification .pdf#page=3"
+    pdfUrl: "/lor-output.pdf"
   }
 ];
 
