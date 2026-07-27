@@ -63,7 +63,7 @@ const certificates: CertData[] = [
     iconImage: "/vertical institute.ico",
     bullets: ["• Professional Certification", "• Specialized Training", "• Practical Assessment", "• Skill Development", "• Industry Ready"],
     date: "Completed Jul 29, 2024",
-    pdfUrl: "/vertical institute.png"
+    pdfUrl: "/vertical institute.pdf"
   }
 ];
 
