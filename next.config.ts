@@ -6,7 +6,8 @@ const cspHeader = `
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data:;
     font-src 'self';
-    object-src 'none';
+    object-src 'self';
+    frame-src 'self';
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
