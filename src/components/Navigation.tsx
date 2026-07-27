@@ -89,8 +89,14 @@ export default function Navigation() {
           {navItems.map((item, i) => (
             <a 
               key={item}
-              href={`#${item.toLowerCase()}`} 
-              className="relative text-textSecondary hover:text-textMain transition-colors py-2 group"
+              href={item === 'Contact' ? undefined : `#${item.toLowerCase()}`}
+              onClick={(e) => {
+                if (item === 'Contact') {
+                  e.preventDefault();
+                  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }
+              }}
+              className="relative text-textSecondary hover:text-textMain transition-colors py-2 group cursor-pointer"
               ref={el => { linksRef.current[i] = el; }}
             >
               {item}
@@ -119,9 +125,17 @@ export default function Navigation() {
           {navItems.map((item, i) => (
             <a 
               key={`mobile-${item}`}
-              href={`#${item.toLowerCase()}`} 
-              className="text-textSecondary hover:text-accent transition-colors p-4"
-              onClick={() => setIsMobileMenuOpen(false)}
+              href={item === 'Contact' ? undefined : `#${item.toLowerCase()}`}
+              className="text-textSecondary hover:text-accent transition-colors p-4 cursor-pointer"
+              onClick={(e) => {
+                setIsMobileMenuOpen(false);
+                if (item === 'Contact') {
+                  e.preventDefault();
+                  setTimeout(() => {
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                  }, 100);
+                }
+              }}
             >
               {item}
             </a>
