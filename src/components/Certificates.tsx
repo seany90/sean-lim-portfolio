@@ -30,6 +30,7 @@ const certificates: CertData[] = [
     title: "Certificate of Appreciation",
     issuer: "Issued by Oeson Learning",
     icon: "O",
+    iconImage: "/oeson learning.ico",
     bullets: ["• Outstanding Contribution", "• Dedication to Excellence", "• Professional Growth", "• Collaboration", "• Continuous Learning"],
     date: "Completed Nov 14, 2024",
     pdfUrl: "/internship-output.pdf"
@@ -39,6 +40,7 @@ const certificates: CertData[] = [
     title: "Certificate of Achievement",
     issuer: "Issued by Oeson Learning",
     icon: "O",
+    iconImage: "/oeson learning.ico",
     bullets: ["• Skill Mastery", "• Goal Achievement", "• Practical Application", "• Exceptional Performance", "• Industry Standards"],
     date: "Completed Nov 14, 2024",
     pdfUrl: "/training-output.pdf"
@@ -48,6 +50,7 @@ const certificates: CertData[] = [
     title: "Letter of Recommendation",
     issuer: "Issued by Oeson Learning",
     icon: "O",
+    iconImage: "/oeson learning.ico",
     bullets: ["• Strong Work Ethic", "• Problem Solving", "• Adaptability", "• Leadership Potential", "• Team Player"],
     date: "Completed Nov 14, 2024",
     pdfUrl: "/lor-output.pdf"
