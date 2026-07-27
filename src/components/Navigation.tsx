@@ -1,9 +1,11 @@
 'use client'
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
@@ -21,7 +23,11 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
-    // Magnetic hover effect
+    // Magnetic hover effect (desktop only)
+    if (typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+      return;
+    }
+
     linksRef.current.forEach((link) => {
       if (!link) return;
       
@@ -52,6 +58,18 @@ export default function Navigation() {
     });
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => { document.body.style.overflow = 'auto'; };
+  }, [isMobileMenuOpen]);
+
+  const navItems = ['About', 'Projects', 'Experience', 'Certificates', 'Contact'];
+
   return (
     <nav 
       ref={navRef}
@@ -59,15 +77,16 @@ export default function Navigation() {
         scrolled ? 'py-4 glass-panel border-white/5' : 'py-8'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-8 md:px-24 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-8 md:px-24 flex items-center justify-between relative z-[110]">
         
-        <a href="#" className="font-heading text-2xl tracking-widest text-textMain relative group">
+        <a href="#" className="font-heading text-2xl tracking-widest text-textMain relative group" onClick={() => setIsMobileMenuOpen(false)}>
           S. LIM
           <div className="absolute -bottom-2 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300"></div>
         </a>
 
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-12 font-display text-sm tracking-widest uppercase">
-          {['About', 'Projects', 'Experience', 'Certificates', 'Contact'].map((item, i) => (
+          {navItems.map((item, i) => (
             <a 
               key={item}
               href={`#${item.toLowerCase()}`} 
@@ -80,7 +99,34 @@ export default function Navigation() {
           ))}
         </div>
 
-        {/* Mobile menu button could go here */}
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden text-textMain hover:text-accent transition-colors p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Menu"
+        >
+          {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 bg-primaryBg/98 backdrop-blur-2xl z-[100] transition-all duration-500 flex flex-col items-center justify-center md:hidden ${
+          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
+      >
+        <div className="flex flex-col items-center gap-10 font-display text-2xl tracking-widest uppercase">
+          {navItems.map((item, i) => (
+            <a 
+              key={`mobile-${item}`}
+              href={`#${item.toLowerCase()}`} 
+              className="text-textSecondary hover:text-accent transition-colors p-4"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item}
+            </a>
+          ))}
+        </div>
       </div>
     </nav>
   );
