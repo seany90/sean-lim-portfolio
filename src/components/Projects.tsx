@@ -57,26 +57,26 @@ export default function Projects() {
         </div>
 
         {/* CSS 3D Laptop Mockup */}
-        <div ref={laptopRef} className="relative w-full max-w-3xl aspect-video perspective-[1500px]">
+        <div ref={laptopRef} className="relative w-full max-w-3xl aspect-[4/3] sm:aspect-video perspective-[1500px]">
           
           {/* Laptop Lid */}
-          <div ref={lidRef} className="absolute inset-0 origin-bottom transform-style-3d bg-secondaryBg border-2 border-white/10 rounded-t-3xl overflow-hidden shadow-[0_-20px_50px_rgba(113,231,255,0.1)] flex flex-col">
-            <div className="w-full h-4 bg-primaryBg/50 flex items-center justify-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-white/20"></div>
+          <div ref={lidRef} className="absolute inset-0 origin-bottom transform-style-3d bg-secondaryBg border-2 border-white/10 rounded-t-xl sm:rounded-t-3xl overflow-hidden shadow-[0_-20px_50px_rgba(113,231,255,0.1)] flex flex-col">
+            <div className="w-full h-3 sm:h-4 bg-primaryBg/50 flex items-center justify-center">
+              <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-white/20"></div>
             </div>
-            <div className="flex-1 bg-black relative p-2">
-              <div className="absolute inset-2 border border-white/5 rounded overflow-hidden">
-                <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 via-primaryBg to-primaryBg flex flex-col items-center justify-center text-center p-4 sm:p-8">
+            <div className="flex-1 bg-black relative p-1 sm:p-2">
+              <div className="absolute inset-1 sm:inset-2 border border-white/5 rounded overflow-hidden">
+                <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 via-primaryBg to-primaryBg flex flex-col items-center justify-center text-center p-2 sm:p-8">
                   
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 sm:mb-6">
-                    <div className="font-heading text-2xl sm:text-3xl text-textMain animate-pulse">System Active</div>
-                    <div className="glass-panel px-3 py-1.5 rounded-lg text-left border border-accent/20 bg-accent/5">
-                      <div className="text-[10px] text-textSecondary uppercase tracking-wider mb-0.5">Response Rate</div>
-                      <div className="text-sm font-display font-bold text-accent leading-none">98.4%</div>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-6 mb-2 sm:mb-6">
+                    <div className="font-heading text-lg sm:text-3xl text-textMain animate-pulse">System Active</div>
+                    <div className="glass-panel px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg text-left border border-accent/20 bg-accent/5">
+                      <div className="text-[8px] sm:text-[10px] text-textSecondary uppercase tracking-wider mb-0.5">Response Rate</div>
+                      <div className="text-xs sm:text-sm font-display font-bold text-accent leading-none">98.4%</div>
                     </div>
                   </div>
 
-                  <div className="font-mono text-[10px] sm:text-xs text-success/70 max-w-md text-left">
+                  <div className="font-mono text-[9px] sm:text-xs text-success/70 max-w-md text-left leading-tight sm:leading-normal">
                     <div>{'>'} Initializing AI Engine...</div>
                     <div>{'>'} Connecting to Firebase...</div>
                     <div>{'>'} Workflow optimization: 100%</div>
