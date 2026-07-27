@@ -13,8 +13,8 @@ export default function Contact() {
         <div className="absolute inset-20 rounded-full border border-white/5"></div>
       </div>
 
-      <div className="relative z-10 glass-panel p-12 md:p-24 rounded-3xl max-w-3xl w-full text-center">
-        <h2 className="font-heading text-5xl md:text-7xl mb-8">Let&apos;s build something <span className="text-accent">extraordinary.</span></h2>
+      <div className="relative z-10 glass-panel p-6 sm:p-12 md:p-24 rounded-3xl max-w-3xl w-full text-center">
+        <h2 className="font-heading text-3xl sm:text-5xl md:text-7xl mb-8">Let&apos;s build something <span className="text-accent">extraordinary.</span></h2>
         
         <p className="font-body text-textSecondary text-lg max-w-xl mx-auto mb-16">
           I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
