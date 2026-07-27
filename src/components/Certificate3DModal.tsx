@@ -49,7 +49,6 @@ function Monolith({ isClosing, onAnimationComplete }: { isClosing: boolean, onAn
         {/* The PDF Overlay placed perfectly on the front face */}
         <Html 
           transform 
-          occlude="blending"
           position={[0, 0, 0]} 
           zIndexRange={[100, 0]}
         >
