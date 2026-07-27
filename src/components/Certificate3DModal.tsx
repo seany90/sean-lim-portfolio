@@ -1,77 +1,6 @@
 'use client'
-import React, { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Edges, Float, Html } from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-function Monolith({ isClosing, onAnimationComplete }: { isClosing: boolean, onAnimationComplete: () => void }) {
-  const meshRef = useRef<THREE.Group>(null);
-  const entryScale = useRef(0);
-  
-  useFrame((state, delta) => {
-    if (meshRef.current) {
-      if (isClosing) {
-        // Tilt backward and fall away when closing
-        meshRef.current.rotation.x -= delta * 3;
-        meshRef.current.position.y -= delta * 5;
-        meshRef.current.position.z -= delta * 10;
-        
-        if (meshRef.current.position.y < -10) {
-          onAnimationComplete();
-        }
-      } else {
-        // Simple, one-time entry animation that STOPS so the PDF doesn't glitch
-        if (entryScale.current < 1) {
-          entryScale.current = Math.min(1, entryScale.current + delta * 3);
-          meshRef.current.scale.setScalar(entryScale.current);
-          // Optional: A slight initial rotation that settles
-          meshRef.current.rotation.x = (1 - entryScale.current) * 0.5;
-        }
-      }
-    }
-  });
-
-  return (
-    <group ref={meshRef}>
-      {/* The 3D Glass Slab */}
-      <mesh position={[0, 0, -0.1]}>
-        <boxGeometry args={[4.2, 3.2, 0.1]} />
-        <meshPhysicalMaterial 
-          color="#050505" 
-          transmission={0.9} 
-          opacity={1} 
-          metalness={0.2} 
-          roughness={0.1} 
-          ior={1.5} 
-          thickness={0.5} 
-          transparent={true}
-        />
-        <Edges scale={1.0} threshold={15} color="#71E7FF" />
-      </mesh>
-
-      {/* The PDF Overlay placed perfectly on the front face */}
-      <Html 
-        transform 
-        position={[0, 0, 0]} 
-        zIndexRange={[100, 0]}
-      >
-        <div 
-          className="w-[800px] h-[600px] bg-secondaryBg rounded-lg overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(113,231,255,0.2)]"
-          style={{ 
-            pointerEvents: 'auto', // allow interacting with PDF
-          }}
-        >
-          <iframe 
-            src="/Coursera R2RLUQWTLD22.pdf" 
-            className="w-full h-full pointer-events-auto"
-            title="Google AI Professional Certificate"
-          />
-        </div>
-      </Html>
-    </group>
-  );
-}
 
 interface Certificate3DModalProps {
   isOpen: boolean;
@@ -79,12 +8,9 @@ interface Certificate3DModalProps {
 }
 
 export default function Certificate3DModal({ isOpen, onClose }: Certificate3DModalProps) {
-  const [isClosing, setIsClosing] = useState(false);
-
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      setIsClosing(false);
     } else {
       document.body.style.overflow = 'auto';
     }
@@ -92,75 +18,96 @@ export default function Certificate3DModal({ isOpen, onClose }: Certificate3DMod
   }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen || isClosing) return;
-
-    const triggerClose = () => {
-      setIsClosing(true);
-    };
+    if (!isOpen) return;
 
     const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > 20) {
-        triggerClose();
+      // Small threshold to prevent accidental closes on slight trackpad movements
+      // But large enough to catch a deliberate scroll
+      if (Math.abs(e.deltaY) > 10) {
+        onClose();
       }
     };
 
     const handleTouchMove = () => {
-      triggerClose();
+      onClose();
     };
 
-    // Delay attaching listeners slightly so the initial click to open doesn't immediately close it
+    // Delay attaching listeners slightly so the opening click doesn't immediately close it
     const timer = setTimeout(() => {
-      window.addEventListener('wheel', handleWheel);
-      window.addEventListener('touchmove', handleTouchMove);
+      // Use capture phase so we catch the wheel even if iframe tries to eat it
+      window.addEventListener('wheel', handleWheel, { capture: true, passive: true });
+      window.addEventListener('touchmove', handleTouchMove, { capture: true, passive: true });
     }, 500);
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('wheel', handleWheel, { capture: true });
+      window.removeEventListener('touchmove', handleTouchMove, { capture: true });
     };
-  }, [isOpen, isClosing]);
-
-  if (!isOpen && !isClosing) return null;
+  }, [isOpen, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center">
-      {/* Background overlay that closes modal on click */}
-      <AnimatePresence>
-        {!isClosing && (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-8" style={{ perspective: '1200px' }}>
+          
+          {/* Background overlay that closes modal on click */}
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-primaryBg/90 backdrop-blur-md cursor-pointer"
-            onClick={() => setIsClosing(true)}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-black/80 backdrop-blur-md cursor-pointer"
+            onClick={onClose}
+          />
+          
+          {/* Helper text */}
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute top-8 right-8 text-textSecondary text-sm tracking-widest uppercase font-display animate-pulse pointer-events-none z-10 hidden sm:block"
           >
-            <div className="absolute top-8 right-8 text-textSecondary text-sm tracking-widest uppercase font-display animate-pulse">
-              Scroll or Click to Close
+            Scroll or Click to Close
+          </motion.div>
+          
+          {/* 3D-styled Framer Motion Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotateX: 25, y: 50 }}
+            animate={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, rotateX: -15, y: -30 }}
+            transition={{ type: "spring", damping: 25, stiffness: 120 }}
+            className="relative w-full max-w-4xl h-[70vh] sm:h-[85vh] bg-secondaryBg rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.6)] z-10 flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header bar with close button */}
+            <div className="w-full h-12 bg-primaryBg/80 backdrop-blur border-b border-white/5 flex items-center justify-between px-4 z-20 shrink-0">
+              <div className="text-xs font-display tracking-widest text-textSecondary uppercase">
+                Google AI Professional
+              </div>
+              <button 
+                className="text-textMain hover:text-accent w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+                onClick={onClose}
+              >
+                ✕
+              </button>
+            </div>
+            
+            {/* Glow effect */}
+            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_50px_rgba(113,231,255,0.05)] z-10" />
+
+            {/* The Certificate PDF. Added #view=FitH to force it to fit perfectly inside the frame! */}
+            <div className="flex-1 w-full bg-[#323639] relative z-0">
+              <iframe 
+                src="/Coursera R2RLUQWTLD22.pdf#view=FitH" 
+                className="w-full h-full"
+                title="Google AI Professional Certificate"
+              />
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-      
-      {/* 3D Canvas */}
-      <div className="absolute inset-0 pointer-events-none">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#71E7FF" />
-          
-          <AnimatePresence>
-            <group>
-              <Monolith 
-                isClosing={isClosing} 
-                onAnimationComplete={() => {
-                  setIsClosing(false);
-                  onClose();
-                }} 
-              />
-            </group>
-          </AnimatePresence>
-        </Canvas>
-      </div>
-    </div>
+
+        </div>
+      )}
+    </AnimatePresence>
   );
 }
