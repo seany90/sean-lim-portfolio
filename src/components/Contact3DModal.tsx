@@ -79,7 +79,7 @@ export default function Contact3DModal({ isOpen, onClose }: Contact3DModalProps)
     // Open mailto link after animation finishes
     const subject = encodeURIComponent(`New Contact from ${formData.name}`);
     const body = encodeURIComponent(formData.message);
-    window.location.href = `mailto:seanlim1990@hotmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:seanlimyuanjin@gmail.com?subject=${subject}&body=${body}`;
     onClose();
   };
 
