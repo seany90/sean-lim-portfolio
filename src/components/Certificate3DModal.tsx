@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface Certificate3DModalProps {
   isOpen: boolean;
   onClose: () => void;
+  title: string;
+  pdfUrl: string;
 }
 
-export default function Certificate3DModal({ isOpen, onClose }: Certificate3DModalProps) {
+export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl }: Certificate3DModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -83,7 +85,7 @@ export default function Certificate3DModal({ isOpen, onClose }: Certificate3DMod
             {/* Header bar with close button */}
             <div className="w-full h-12 bg-primaryBg/80 backdrop-blur border-b border-white/5 flex items-center justify-between px-4 z-20 shrink-0">
               <div className="text-xs font-display tracking-widest text-textSecondary uppercase">
-                Google AI Professional
+                {title}
               </div>
               <button 
                 className="text-textMain hover:text-accent w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
@@ -99,9 +101,9 @@ export default function Certificate3DModal({ isOpen, onClose }: Certificate3DMod
             {/* The Certificate PDF. Added #view=FitH to force it to fit perfectly inside the frame! */}
             <div className="flex-1 w-full bg-[#323639] relative z-0">
               <iframe 
-                src="/Coursera R2RLUQWTLD22.pdf#view=FitH" 
+                src={`${pdfUrl}#view=FitH`} 
                 className="w-full h-full"
-                title="Google AI Professional Certificate"
+                title={title}
               />
             </div>
           </motion.div>
