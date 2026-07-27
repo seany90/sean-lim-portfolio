@@ -8,6 +8,7 @@ interface CertData {
   title: string;
   issuer: string;
   icon: string;
+  iconImage?: string;
   bullets: string[];
   date: string;
   pdfUrl: string;
@@ -19,6 +20,7 @@ const certificates: CertData[] = [
     title: "Google AI Professional",
     issuer: "Certificate by Coursera",
     icon: "G",
+    iconImage: "/google.png",
     bullets: ["• AI Fundamentals", "• Content Creation", "• Brainstorming & Planning", "• Data Analysis", "• Research & Insights", "• App Building", "• Writing & Communicating"],
     date: "Completed Jul 7, 2026",
     pdfUrl: "/Coursera R2RLUQWTLD22.pdf"
@@ -100,8 +102,12 @@ function CertificateCard({ cert, onClick }: { cert: CertData, onClick: () => voi
         style={{ transform: "translateZ(50px)" }}
         className="relative md:absolute md:inset-0 p-8 flex flex-col items-center justify-center text-center border border-white/5 rounded-xl bg-gradient-to-br from-white/5 to-transparent w-full h-auto md:h-full"
       >
-        <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(113,231,255,0.4)] md:group-hover:scale-110 transition-transform duration-500 shrink-0">
-          <span className="font-display text-accent text-2xl font-bold">{cert.icon}</span>
+        <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(113,231,255,0.4)] md:group-hover:scale-110 transition-transform duration-500 shrink-0 overflow-hidden border border-white/10">
+          {cert.iconImage ? (
+            <img src={cert.iconImage} alt={cert.title} className="w-full h-full object-cover" />
+          ) : (
+            <span className="font-display text-accent text-2xl font-bold">{cert.icon}</span>
+          )}
         </div>
         <h3 className="font-heading text-xl md:text-2xl mb-1 text-textMain tracking-wide leading-tight">{cert.title}</h3>
         <p className="font-body text-accent tracking-widest uppercase text-[10px] mb-4">{cert.issuer}</p>
