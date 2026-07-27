@@ -47,8 +47,8 @@ export default function Projects() {
       const tl2 = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef2.current,
-          start: "top 60%",
-          end: "center center",
+          start: "top bottom", // Starts as soon as it enters the bottom of the screen
+          end: "bottom top", // Ends only when it completely leaves the top of the screen
           scrub: 1,
           onEnter: () => videoRef.current?.play(),
           onLeave: () => videoRef.current?.pause(),
@@ -177,7 +177,7 @@ export default function Projects() {
                 muted 
                 playsInline
                 loop
-                className="w-full h-full object-cover opacity-90"
+                className="w-full h-full object-contain opacity-90"
               />
             </div>
           </div>
