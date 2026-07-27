@@ -1,18 +1,28 @@
 'use client'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+export interface PdfTab {
+  label: string;
+  url: string;
+}
 
 interface Certificate3DModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  pdfUrl: string;
+  pdfUrl?: string; // Standard single PDF
+  pdfTabs?: PdfTab[]; // Multiple PDFs with tabs
 }
 
-export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl }: Certificate3DModalProps) {
+export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl, pdfTabs }: Certificate3DModalProps) {
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+
+  // Reset tab index when modal opens
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      setActiveTabIndex(0);
     } else {
       document.body.style.overflow = 'auto';
     }
@@ -24,7 +34,6 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl }: C
 
     const handleWheel = (e: WheelEvent) => {
       // Small threshold to prevent accidental closes on slight trackpad movements
-      // But large enough to catch a deliberate scroll
       if (Math.abs(e.deltaY) > 10) {
         onClose();
       }
@@ -34,9 +43,7 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl }: C
       onClose();
     };
 
-    // Delay attaching listeners slightly so the opening click doesn't immediately close it
     const timer = setTimeout(() => {
-      // Use capture phase so we catch the wheel even if iframe tries to eat it
       window.addEventListener('wheel', handleWheel, { capture: true, passive: true });
       window.addEventListener('touchmove', handleTouchMove, { capture: true, passive: true });
     }, 500);
@@ -47,6 +54,11 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl }: C
       window.removeEventListener('touchmove', handleTouchMove, { capture: true });
     };
   }, [isOpen, onClose]);
+
+  // Determine which URL to show based on if tabs are provided
+  const activeUrl = pdfTabs && pdfTabs.length > 0 
+    ? pdfTabs[activeTabIndex].url 
+    : pdfUrl;
 
   return (
     <AnimatePresence>
@@ -82,11 +94,39 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl }: C
             className="relative w-full max-w-4xl h-[70vh] sm:h-[85vh] bg-secondaryBg rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.6)] z-10 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header bar with close button */}
-            <div className="w-full h-12 bg-primaryBg/80 backdrop-blur border-b border-white/5 flex items-center justify-between px-4 z-20 shrink-0">
-              <div className="text-xs font-display tracking-widest text-textSecondary uppercase">
-                {title}
+            {/* Header bar */}
+            <div className="w-full h-14 bg-primaryBg/90 backdrop-blur border-b border-white/5 flex items-center justify-between px-4 z-20 shrink-0">
+              
+              {/* Tabs or Title */}
+              <div className="flex items-center gap-2">
+                {pdfTabs && pdfTabs.length > 0 ? (
+                  <div className="flex p-1 bg-white/5 rounded-lg border border-white/10">
+                    {pdfTabs.map((tab, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveTabIndex(idx)}
+                        className={`relative px-4 py-1.5 text-xs font-display tracking-widest uppercase rounded-md transition-colors ${
+                          activeTabIndex === idx ? 'text-black' : 'text-textSecondary hover:text-white'
+                        }`}
+                      >
+                        {activeTabIndex === idx && (
+                          <motion.div
+                            layoutId="activeTab"
+                            className="absolute inset-0 bg-accent rounded-md"
+                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                          />
+                        )}
+                        <span className="relative z-10">{tab.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-xs font-display tracking-widest text-textSecondary uppercase pl-2">
+                    {title}
+                  </div>
+                )}
               </div>
+
               <button 
                 className="text-textMain hover:text-accent w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
                 onClick={onClose}
@@ -100,8 +140,10 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl }: C
 
             {/* The Certificate PDF. Added #view=FitH to force it to fit perfectly inside the frame! */}
             <div className="flex-1 w-full bg-[#323639] relative z-0">
+              {/* Key ensures iframe reloads fully when URL changes */}
               <iframe 
-                src={`${pdfUrl}#view=FitH`} 
+                key={activeUrl}
+                src={`${activeUrl}#view=FitH`} 
                 className="w-full h-full"
                 title={title}
               />

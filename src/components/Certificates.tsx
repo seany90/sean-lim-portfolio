@@ -11,7 +11,8 @@ interface CertData {
   iconImage?: string;
   bullets: string[];
   date: string;
-  pdfUrl: string;
+  pdfUrl?: string;
+  pdfTabs?: { label: string; url: string }[];
 }
 
 const certificates: CertData[] = [
@@ -64,6 +65,19 @@ const certificates: CertData[] = [
     bullets: ["• Professional Certification", "• Specialized Training", "• Practical Assessment", "• Skill Development", "• Industry Ready"],
     date: "Completed Jul 29, 2024",
     pdfUrl: "/vertical institute.pdf"
+  },
+  {
+    id: "aventis-graduate",
+    title: "Aventis Graduate Certification",
+    issuer: "Issued by Aventis Graduate School",
+    icon: "A",
+    iconImage: "/Aventis graduate.ico",
+    bullets: ["• Advanced Theory", "• Practical Execution", "• Research Excellence", "• Professional Acumen", "• Comprehensive Analysis"],
+    date: "Completed Dec 17, 2023",
+    pdfTabs: [
+      { label: "Certificate", url: "/Aventis graduate(1).pdf" },
+      { label: "Transcript", url: "/Aventis graduate(2).pdf" }
+    ]
   }
 ];
 
@@ -161,7 +175,8 @@ export default function Certificates() {
         isOpen={activeCert !== null} 
         onClose={() => setActiveCert(null)} 
         title={activeCert?.title || ""}
-        pdfUrl={activeCert?.pdfUrl || ""}
+        pdfUrl={activeCert?.pdfUrl}
+        pdfTabs={activeCert?.pdfTabs}
       />
     </section>
   );
