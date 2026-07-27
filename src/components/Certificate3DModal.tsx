@@ -1,5 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface PdfTab {
@@ -56,11 +57,18 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl, pdf
   }, [isOpen, onClose]);
 
   // Determine which URL to show based on if tabs are provided
-  const activeUrl = pdfTabs && pdfTabs.length > 0 
+  const activeUrl = activeTabIndex !== null && pdfTabs && pdfTabs.length > 0
     ? pdfTabs[activeTabIndex].url 
     : pdfUrl;
 
-  return (
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-8" style={{ perspective: '1200px' }}>
@@ -175,6 +183,7 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl, pdf
 
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

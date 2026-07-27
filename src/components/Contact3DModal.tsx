@@ -1,5 +1,6 @@
 'use client'
 import React, { useRef, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Edges, Float } from '@react-three/drei';
 import * as THREE from 'three';
@@ -68,7 +69,12 @@ export default function Contact3DModal({ isOpen, onClose }: Contact3DModalProps)
     return () => { document.body.style.overflow = 'auto'; };
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!isOpen || !mounted) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,7 +89,7 @@ export default function Contact3DModal({ isOpen, onClose }: Contact3DModalProps)
     onClose();
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[200] flex items-center justify-center">
       {/* Background overlay */}
       <motion.div 
@@ -155,6 +161,7 @@ export default function Contact3DModal({ isOpen, onClose }: Contact3DModalProps)
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </div>,
+    document.body
   );
 }
