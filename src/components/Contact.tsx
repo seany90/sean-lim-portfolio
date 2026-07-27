@@ -26,7 +26,7 @@ export default function Contact() {
             <span className="font-display tracking-widest text-sm uppercase">Email Me</span>
           </a>
           
-          <a href="#" className="group flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-accent transition-all duration-300">
+          <a href="https://www.linkedin.com/in/seany-lim/" target="_blank" rel="noopener noreferrer" className="group flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-accent transition-all duration-300">
             <FiLinkedin className="text-textSecondary group-hover:text-accent transition-colors" />
             <span className="font-display tracking-widest text-sm uppercase">LinkedIn</span>
           </a>
