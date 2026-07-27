@@ -1,7 +1,10 @@
 'use client'
+import { useState } from 'react';
 import { FiMail, FiLinkedin, FiDownload } from 'react-icons/fi';
+import Contact3DModal from './Contact3DModal';
 
 export default function Contact() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <section id="contact" className="relative min-h-screen py-32 px-8 md:px-24 flex flex-col items-center justify-center overflow-hidden">
       
@@ -21,10 +24,10 @@ export default function Contact() {
         </p>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-          <a href="mailto:contact@seanlim.com" className="group flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-accent transition-all duration-300">
+          <button onClick={() => setIsModalOpen(true)} className="group flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-accent transition-all duration-300">
             <FiMail className="text-textSecondary group-hover:text-accent transition-colors" />
             <span className="font-display tracking-widest text-sm uppercase">Email Me</span>
-          </a>
+          </button>
           
           <a href="https://www.linkedin.com/in/seany-lim/" target="_blank" rel="noopener noreferrer" className="group flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-accent transition-all duration-300">
             <FiLinkedin className="text-textSecondary group-hover:text-accent transition-colors" />
@@ -38,6 +41,8 @@ export default function Contact() {
         </div>
       </div>
       
+      <Contact3DModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
       <footer className="absolute bottom-8 text-xs font-display tracking-widest text-textSecondary opacity-50 uppercase">
         © {new Date().getFullYear()} Sean Lim. All rights reserved.
       </footer>
