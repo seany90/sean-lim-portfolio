@@ -54,6 +54,16 @@ const certificates: CertData[] = [
     bullets: ["• Strong Work Ethic", "• Problem Solving", "• Adaptability", "• Leadership Potential", "• Team Player"],
     date: "Completed Nov 14, 2024",
     pdfUrl: "/lor-output.pdf"
+  },
+  {
+    id: "vertical-institute",
+    title: "Vertical Institute Certification",
+    issuer: "Issued by Vertical Institute",
+    icon: "V",
+    iconImage: "/vertical institute.ico",
+    bullets: ["• Professional Certification", "• Specialized Training", "• Practical Assessment", "• Skill Development", "• Industry Ready"],
+    date: "Completed Jul 29, 2024",
+    pdfUrl: "/vertical institute.png"
   }
 ];
 
