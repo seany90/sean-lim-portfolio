@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 function Monolith({ isClosing, onAnimationComplete }: { isClosing: boolean, onAnimationComplete: () => void }) {
   const meshRef = useRef<THREE.Group>(null);
+  const entryScale = useRef(0);
   
   useFrame((state, delta) => {
     if (meshRef.current) {
@@ -20,53 +21,55 @@ function Monolith({ isClosing, onAnimationComplete }: { isClosing: boolean, onAn
           onAnimationComplete();
         }
       } else {
-        // Slow float rotation for the monolith
-        meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
-        meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.02;
+        // Simple, one-time entry animation that STOPS so the PDF doesn't glitch
+        if (entryScale.current < 1) {
+          entryScale.current = Math.min(1, entryScale.current + delta * 3);
+          meshRef.current.scale.setScalar(entryScale.current);
+          // Optional: A slight initial rotation that settles
+          meshRef.current.rotation.x = (1 - entryScale.current) * 0.5;
+        }
       }
     }
   });
 
   return (
-    <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.5}>
-      <group ref={meshRef}>
-        {/* The 3D Glass Slab */}
-        <mesh position={[0, 0, -0.1]}>
-          <boxGeometry args={[4.2, 3.2, 0.1]} />
-          <meshPhysicalMaterial 
-            color="#050505" 
-            transmission={0.9} 
-            opacity={1} 
-            metalness={0.2} 
-            roughness={0.1} 
-            ior={1.5} 
-            thickness={0.5} 
-            transparent={true}
-          />
-          <Edges scale={1.0} threshold={15} color="#71E7FF" />
-        </mesh>
+    <group ref={meshRef}>
+      {/* The 3D Glass Slab */}
+      <mesh position={[0, 0, -0.1]}>
+        <boxGeometry args={[4.2, 3.2, 0.1]} />
+        <meshPhysicalMaterial 
+          color="#050505" 
+          transmission={0.9} 
+          opacity={1} 
+          metalness={0.2} 
+          roughness={0.1} 
+          ior={1.5} 
+          thickness={0.5} 
+          transparent={true}
+        />
+        <Edges scale={1.0} threshold={15} color="#71E7FF" />
+      </mesh>
 
-        {/* The PDF Overlay placed perfectly on the front face */}
-        <Html 
-          transform 
-          position={[0, 0, 0]} 
-          zIndexRange={[100, 0]}
+      {/* The PDF Overlay placed perfectly on the front face */}
+      <Html 
+        transform 
+        position={[0, 0, 0]} 
+        zIndexRange={[100, 0]}
+      >
+        <div 
+          className="w-[800px] h-[600px] bg-secondaryBg rounded-lg overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(113,231,255,0.2)]"
+          style={{ 
+            pointerEvents: 'auto', // allow interacting with PDF
+          }}
         >
-          <div 
-            className="w-[800px] h-[600px] bg-secondaryBg rounded-lg overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(113,231,255,0.2)]"
-            style={{ 
-              pointerEvents: 'auto', // allow interacting with PDF
-            }}
-          >
-            <iframe 
-              src="/Coursera R2RLUQWTLD22.pdf" 
-              className="w-full h-full pointer-events-auto"
-              title="Google AI Professional Certificate"
-            />
-          </div>
-        </Html>
-      </group>
-    </Float>
+          <iframe 
+            src="/Coursera R2RLUQWTLD22.pdf" 
+            className="w-full h-full pointer-events-auto"
+            title="Google AI Professional Certificate"
+          />
+        </div>
+      </Html>
+    </group>
   );
 }
 
