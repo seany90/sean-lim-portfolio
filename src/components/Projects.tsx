@@ -66,20 +66,23 @@ export default function Projects() {
             </div>
             <div className="flex-1 bg-black relative p-2">
               <div className="absolute inset-2 border border-white/5 rounded overflow-hidden">
-                <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 via-primaryBg to-primaryBg flex flex-col items-center justify-center text-center p-8">
-                  <div className="font-heading text-2xl mb-4 text-textMain animate-pulse">System Active</div>
-                  <div className="font-mono text-xs text-success/70 max-w-md">
+                <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/20 via-primaryBg to-primaryBg flex flex-col items-center justify-center text-center p-4 sm:p-8">
+                  
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 sm:mb-6">
+                    <div className="font-heading text-2xl sm:text-3xl text-textMain animate-pulse">System Active</div>
+                    <div className="glass-panel px-3 py-1.5 rounded-lg text-left border border-accent/20 bg-accent/5">
+                      <div className="text-[10px] text-textSecondary uppercase tracking-wider mb-0.5">Response Rate</div>
+                      <div className="text-sm font-display font-bold text-accent leading-none">98.4%</div>
+                    </div>
+                  </div>
+
+                  <div className="font-mono text-[10px] sm:text-xs text-success/70 max-w-md text-left">
                     <div>{'>'} Initializing AI Engine...</div>
                     <div>{'>'} Connecting to Firebase...</div>
                     <div>{'>'} Workflow optimization: 100%</div>
                     <div>{'>'} Status: Operational</div>
                   </div>
                   
-                  {/* Floating UI cards inside screen */}
-                  <div className="absolute top-8 left-8 glass-panel p-4 rounded-xl text-left scale-75 opacity-70">
-                    <div className="text-xs text-textSecondary mb-1">Response Rate</div>
-                    <div className="text-lg text-accent">98.4%</div>
-                  </div>
                 </div>
               </div>
             </div>
