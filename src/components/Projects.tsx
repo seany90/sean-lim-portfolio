@@ -152,7 +152,7 @@ export default function Projects() {
 
         {/* Floating Video Card */}
         <div className="perspective-[1500px] w-full max-w-4xl">
-          <div ref={videoCardRef} className="relative w-full aspect-video glass-panel rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.8)] flex flex-col">
+          <div ref={videoCardRef} className="relative w-full glass-panel rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.8)] flex flex-col">
             
             {/* Header bar */}
             <div className="w-full h-8 sm:h-10 bg-primaryBg/80 backdrop-blur flex items-center px-4 shrink-0 border-b border-white/5">
@@ -167,9 +167,9 @@ export default function Projects() {
             </div>
 
             {/* Video Container */}
-            <div className="flex-1 w-full bg-black relative">
-              {/* Glow overlay */}
-              <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(113,231,255,0.15)] z-10" />
+            <div className="w-full bg-black relative">
+              {/* Very subtle glow overlay, reduced so it doesn't hide text */}
+              <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(113,231,255,0.1)] z-10" />
               
               <video 
                 ref={videoRef}
@@ -177,7 +177,7 @@ export default function Projects() {
                 muted 
                 playsInline
                 loop
-                className="w-full h-full object-contain opacity-90"
+                className="w-full h-auto block opacity-90"
               />
             </div>
           </div>
