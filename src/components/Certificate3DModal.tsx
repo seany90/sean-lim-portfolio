@@ -138,15 +138,38 @@ export default function Certificate3DModal({ isOpen, onClose, title, pdfUrl, pdf
             {/* Glow effect */}
             <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_50px_rgba(113,231,255,0.05)] z-10" />
 
-            {/* The Certificate PDF. Added #view=FitH to force it to fit perfectly inside the frame! */}
-            <div className="flex-1 w-full bg-[#323639] relative z-0">
-              {/* Key ensures iframe reloads fully when URL changes */}
+            {/* Desktop PDF Viewer (Hidden on mobile because mobile browsers often block or fail to render iframes) */}
+            <div className="hidden md:block flex-1 w-full bg-[#323639] relative z-0">
               <iframe 
                 key={activeUrl}
                 src={`${activeUrl}#view=FitH`} 
                 className="w-full h-full"
                 title={title}
               />
+            </div>
+
+            {/* Mobile Fallback UI (Shown only on small screens) */}
+            <div className="md:hidden flex-1 w-full bg-primaryBg flex flex-col items-center justify-center p-8 text-center relative z-0">
+              <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(113,231,255,0.2)] border border-accent/20">
+                <svg className="w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="font-heading text-2xl mb-4 text-textMain">Certificate Ready</h3>
+              <p className="font-body text-textSecondary text-sm mb-8 max-w-[250px]">
+                Mobile browsers require certificates to be opened securely in a new tab.
+              </p>
+              <a 
+                href={activeUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative px-8 py-4 bg-accent/10 border border-accent rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(113,231,255,0.4)]"
+              >
+                <div className="absolute inset-0 bg-accent translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+                <span className="relative z-10 font-display uppercase tracking-widest text-xs font-bold text-accent group-hover:text-primaryBg transition-colors duration-300">
+                  Open Certificate
+                </span>
+              </a>
             </div>
           </motion.div>
 
