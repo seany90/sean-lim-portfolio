@@ -30,7 +30,7 @@ const certificates: CertData[] = [
     icon: "O",
     bullets: ["• Outstanding Contribution", "• Dedication to Excellence", "• Professional Growth", "• Collaboration", "• Continuous Learning"],
     date: "Completed 2026",
-    pdfUrl: "/OESON Learning Certification .pdf#page=1"
+    pdfUrl: "/internship-output.pdf"
   },
   {
     id: "oeson-achievement",
