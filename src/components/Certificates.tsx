@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import Certificate3DModal from './Certificate3DModal';
 
 export default function Certificates() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,30 +81,8 @@ export default function Certificates() {
         </div>
       </motion.div>
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-8"
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div 
-            className="relative w-full max-w-4xl h-[80vh] bg-secondaryBg rounded-2xl overflow-hidden border border-white/10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button 
-              className="absolute top-4 right-4 text-textMain hover:text-accent z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-md"
-              onClick={() => setIsModalOpen(false)}
-            >
-              ✕
-            </button>
-            <iframe 
-              src="/Coursera R2RLUQWTLD22.pdf" 
-              className="w-full h-full"
-              title="Google AI Professional Certificate"
-            />
-          </div>
-        </div>
-      )}
+      {/* 3D Certificate Modal */}
+      <Certificate3DModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }
