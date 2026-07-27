@@ -29,7 +29,7 @@ const certificates: CertData[] = [
     issuer: "Issued by Oeson Learning",
     icon: "O",
     bullets: ["• Outstanding Contribution", "• Dedication to Excellence", "• Professional Growth", "• Collaboration", "• Continuous Learning"],
-    date: "Completed 2026",
+    date: "Completed Nov 14, 2024",
     pdfUrl: "/internship-output.pdf"
   },
   {
@@ -38,7 +38,7 @@ const certificates: CertData[] = [
     issuer: "Issued by Oeson Learning",
     icon: "O",
     bullets: ["• Skill Mastery", "• Goal Achievement", "• Practical Application", "• Exceptional Performance", "• Industry Standards"],
-    date: "Completed 2026",
+    date: "Completed Nov 14, 2024",
     pdfUrl: "/training-output.pdf"
   },
   {
@@ -47,7 +47,7 @@ const certificates: CertData[] = [
     issuer: "Issued by Oeson Learning",
     icon: "O",
     bullets: ["• Strong Work Ethic", "• Problem Solving", "• Adaptability", "• Leadership Potential", "• Team Player"],
-    date: "Completed 2026",
+    date: "Completed Nov 14, 2024",
     pdfUrl: "/lor-output.pdf"
   }
 ];
