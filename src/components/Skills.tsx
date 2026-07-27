@@ -37,7 +37,7 @@ export default function Skills() {
         {skills.map((skill, index) => (
           <div 
             key={index} 
-            className="glass-panel px-6 py-4 rounded-full font-display text-sm tracking-widest text-textMain hover:text-primaryBg hover:bg-accent transition-all duration-300 cursor-pointer shadow-[0_0_15px_rgba(113,231,255,0)] hover:shadow-[0_0_25px_rgba(113,231,255,0.6)] transform hover:scale-110"
+            className="glass-panel px-6 py-4 rounded-full font-display text-sm tracking-widest text-textMain hover:text-accent border border-transparent hover:border-accent/30 transition-all duration-300 cursor-pointer shadow-[0_0_15px_rgba(113,231,255,0)] hover:shadow-[0_0_25px_rgba(113,231,255,0.6)] transform hover:scale-110"
             style={{
               transform: `translateZ(${(index * 17) % 50}px)`
             }}
