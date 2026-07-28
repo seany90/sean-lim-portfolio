@@ -6,11 +6,8 @@ const cspHeader = `
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data:;
     font-src 'self';
-    object-src 'self';
-    frame-src 'self';
     base-uri 'self';
     form-action 'self';
-    frame-ancestors 'self';
     upgrade-insecure-requests;
 `
 
@@ -27,10 +24,6 @@ const nextConfig: NextConfig = {
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
           },
           {
             key: 'X-XSS-Protection',
