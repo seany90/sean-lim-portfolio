@@ -10,7 +10,7 @@ const cspHeader = `
     frame-src 'self';
     base-uri 'self';
     form-action 'self';
-    frame-ancestors 'none';
+    frame-ancestors 'self';
     upgrade-insecure-requests;
 `
 
@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'X-Frame-Options',
-            value: 'DENY',
+            value: 'SAMEORIGIN',
           },
           {
             key: 'X-XSS-Protection',
